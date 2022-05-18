@@ -28,11 +28,17 @@ plugin:
     type: "ecs"
     args:
       auto: false #仅适用于公网的服务器。本地运行不要启用这个功能。
-      ipv4: "202.120.2.101" # 预设 IPv4
-      ipv6: "2001:da8:8000:1:202:120:2:101" # 预设 IPv6
+      ipv4: "a.a.a.a" # 预设 IPv4
       force_overwrite: true # 强制覆盖
       mask4: 24 # 用于 ipv4 地址的掩码 默认: 24。
-      mask6: 48 # 用于 ipv6 地址的掩码 默认: 48。
+
+  - tag: "ecs-us"
+    type: "ecs"
+    args:
+      auto: false #仅适用于公网的服务器。本地运行不要启用这个功能。
+      ipv4: "b.b.b.b" # 预设 IPv4
+      force_overwrite: true # 强制覆盖
+      mask4: 24 # 用于 ipv4 地址的掩码 默认: 24。
 
   # 修改应答 ttl
   - tag: "modify_ttl"
@@ -63,6 +69,7 @@ plugin:
         - if:
             - query_notcn # 已知的 非cn域名
           exec:
+            - ecs-us              
             - _prefer_ipv4 # 优先 IPv4
             - _pad_query
             - remote # 无污染
@@ -72,10 +79,12 @@ plugin:
                 - _return # 结束
 
         - primary: #其他所有情况
+            - ecs-us                      
             - _prefer_ipv4
             - _pad_query
             - remote
           secondary:
+            - ecs-cn              
             - _prefer_ipv4
             - _pad_query
             - local
@@ -118,16 +127,12 @@ plugin:
       upstream:
         - addr: "https://dns.alidns.com/dns-query" # 服务器地址
           ip_addr: # 手动指定服务器的 IP 地址 可以配置多个
-            - "2400:3200:baba::1"
             - "223.5.5.5"
-            - "2400:3200::1"
             - "223.6.6.6"
           trusted: true # 是否是可信服务器
         - addr: "tls://dns.alidns.com" # 服务器地址
           ip_addr: # 手动指定服务器的 IP 地址 可以配置多个
-            - "2400:3200:baba::1"
             - "223.5.5.5"
-            - "2400:3200::1"
             - "223.6.6.6"
           trusted: true # 是否是可信服务器
 
@@ -144,12 +149,10 @@ plugin:
       upstream:
         - addr: "https://doh.pub/dns-query" # 服务器地址
           ip_addr: # 手动指定服务器的 IP 地址 可以配置多个
-            - "2402:4e00::"
             - "119.29.29.29"
           trusted: true # 是否是可信服务器
         - addr: "tls://dot.pub" # 服务器地址
           ip_addr: # 手动指定服务器的 IP 地址 可以配置多个
-            - "2402:4e00::"
             - "119.29.29.29"
           trusted: true # 是否是可信服务器
 
@@ -173,16 +176,12 @@ plugin:
       upstream:
         - addr: "https://dns.google/dns-query" # 服务器地址
           ip_addr: # 手动指定服务器的 IP 地址 可以配置多个
-            - "2001:4860:4860::8844"
             - "8.8.4.4"
-            - "2001:4860:4860::8888"
             - "8.8.8.8"
           trusted: true # 是否是可信服务器
         - addr: "tls://dns.google" # 服务器地址
           ip_addr: # 手动指定服务器的 IP 地址 可以配置多个
-            - "2001:4860:4860::8844"
             - "8.8.4.4"
-            - "2001:4860:4860::8888"
             - "8.8.8.8"
           trusted: true # 是否是可信服务器
       bootstrap:
@@ -198,16 +197,12 @@ plugin:
       upstream:
         - addr: "https://cloudflare-dns.com/dns-query" # 服务器地址
           ip_addr: # 手动指定服务器的 IP 地址 可以配置多个
-            - "2606:4700:4700::1001"
             - "1.0.0.1"
-            - "2606:4700:4700::1111"
             - "1.1.1.1"
           trusted: true # 是否是可信服务器
         - addr: "tls://cloudflare-dns.com" # 服务器地址
           ip_addr: # 手动指定服务器的 IP 地址 可以配置多个
-            - "2606:4700:4700::1001"
             - "1.0.0.1"
-            - "2606:4700:4700::1111"
             - "1.1.1.1"
           trusted: true # 是否是可信服务器
 
@@ -222,11 +217,9 @@ plugin:
     type: forward
     args:
       upstream:
-        - addr: "quic://dns-unfiltered.adguard" # 服务器地址
+        - addr: "https://dns.adguard.com/dns-query" # 服务器地址
           ip_addr: # 手动指定服务器的 IP 地址 可以配置多个
-            - "2a10:50c0::1:ff"
             - "94.140.14.140"
-            - "2a10:50c0::2:ff"
             - "94.140.14.141"
           trusted: true # 是否是可信服务器
 
