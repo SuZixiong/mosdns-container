@@ -1,3 +1,18 @@
+```
+version: '3.3'
+services:
+    mosdns:
+        container_name: mosdns
+        ports:
+            - '5454:53/udp'
+            - '5454:53/tcp'
+        image: 'suzixiong/mosdns:latest'
+        environment:
+          - ECS_CN=6.6.6.6
+          - ECS_US=7.7.7.7
+```
+---------------------------------------------------------------------------------------
+
 ![mosdns](https://truecharts.org/_static/img/appicons/mosdns.png)
 
 
@@ -37,3 +52,4 @@ docker run -d --name mosdns -p 5454:53/udp -p 5454:53/tcp  sagit.io/601096721/mo
 ```
 
 因为容器已经包含了配置文件，所以可以不映射`/etc/mosdns`，如果需要修改配置文件可以映射配置目录。
+
