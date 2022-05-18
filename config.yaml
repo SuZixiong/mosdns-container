@@ -28,7 +28,7 @@ plugin:
     type: "ecs"
     args:
       auto: false #仅适用于公网的服务器。本地运行不要启用这个功能。
-      ipv4: "a.a.a.a" # 预设 IPv4
+      ipv4: "12.12.12.12" # 预设 IPv4
       force_overwrite: true # 强制覆盖
       mask4: 24 # 用于 ipv4 地址的掩码 默认: 24。
 
@@ -36,7 +36,7 @@ plugin:
     type: "ecs"
     args:
       auto: false #仅适用于公网的服务器。本地运行不要启用这个功能。
-      ipv4: "b.b.b.b" # 预设 IPv4
+      ipv4: "123.123.123.123" # 预设 IPv4
       force_overwrite: true # 强制覆盖
       mask4: 24 # 用于 ipv4 地址的掩码 默认: 24。
 
