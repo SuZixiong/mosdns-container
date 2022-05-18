@@ -2,8 +2,8 @@ FROM --platform=${TARGETPLATFORM} golang:alpine as builder
 ARG CGO_ENABLED=0
 ARG TAG
 ARG REPOSITORY
-ENV ecs-cn 12.12.12.12
-ENV ecs-us 123.123.123.123
+ENV ECS_CN 12.12.12.12
+ENV ECS_US 123.123.123.123
 
 WORKDIR /root
 RUN apk add --update git \
